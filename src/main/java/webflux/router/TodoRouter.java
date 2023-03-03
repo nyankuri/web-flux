@@ -13,7 +13,9 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import webflux.router.service.model.todo.TodoQuery;
 import webflux.router.service.model.todo.TodoQueryInputService;
+import webflux.router.service.model.todo.TodoQueryOutputService;
 import webflux.router.service.todo.TodoFindAllService;
 import webflux.router.service.todo.TodoFindService;
 
@@ -32,17 +34,18 @@ public class TodoRouter {
                 GET("/todo/find/{id}").and(accept(MediaType.APPLICATION_JSON)),
                 request ->
                     this.todoFindService
-                        .promise(new TodoQueryInputService(request.pathVariable("id")))
+                        .promise(new TodoQueryInputService(Integer.valueOf(request.pathVariable("id"))))
+                        .map(TodoQueryOutputService::todo)
                         .flatMap(
                             output ->
                                 ok().contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue(output))))
             .andRoute(
                 GET("/todo/all").and(accept(MediaType.APPLICATION_JSON)),
                 request ->
-                    this.todoFindAllService
-                        .promise(new TodoQueryInputService(null))
-                        .flatMap(
-                            output ->
-                                ok().contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue(output))));
+                    ok().body(
+                        this.todoFindAllService
+                            .promise(new TodoQueryInputService(null))
+                            .map(TodoQueryOutputService::todo),
+                        TodoQuery.class));
   }
 }

@@ -1,6 +1,6 @@
 package webflux.domain;
 
-public interface DomainObject<D> {
+public sealed interface DomainObject<D> permits Aggregate, Entity, Value {
 
   boolean equalTo(D target);
 }

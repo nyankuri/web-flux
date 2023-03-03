@@ -1,4 +1,4 @@
 package webflux.service.model;
 
-public interface ServiceModel {
+public sealed interface ServiceModel permits Input, Output {
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 import webflux.domain.entity.todo.Todo;
 import webflux.domain.repository.todo.TodoRepository;
-import webflux.router.service.model.todo.QueryTodo;
+import webflux.router.service.model.todo.TodoQuery;
 import webflux.router.service.model.todo.TodoQueryInputService;
 import webflux.router.service.model.todo.TodoQueryOutputService;
 import webflux.router.service.todo.TodoFindService;
@@ -20,12 +20,12 @@ public class TodoFindServiceImpl implements TodoFindService {
   public Mono<TodoQueryOutputService> promise(TodoQueryInputService input) {
     return
         this.todoRepository
-            .findById(Integer.valueOf(input.id()))
+            .findById(Todo.of(input.id()))
             .map(this::todo)
             .map(TodoQueryOutputService::new);
   }
 
-  private QueryTodo todo(Todo todo) {
-    return new QueryTodo(todo.id(), todo.name().value(), todo.memo().value());
+  private TodoQuery todo(Todo todo) {
+    return new TodoQuery(todo.id(), todo.name().value(), todo.memo().value());
   }
 }

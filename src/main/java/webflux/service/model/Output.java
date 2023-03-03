@@ -1,4 +1,4 @@
 package webflux.service.model;
 
-public interface Output extends ServiceModel {
+public non-sealed interface Output extends ServiceModel {
 }

@@ -9,5 +9,5 @@ public interface TodoRepository extends Repository<Todo> {
 
   Flux<Todo> findAll();
 
-  Mono<Todo> findById(Integer id);
+  Mono<Todo> findById(Todo todo);
 }

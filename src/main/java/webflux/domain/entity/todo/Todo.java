@@ -1,5 +1,9 @@
 package webflux.domain.entity.todo;
 
+
+import static webflux.domain.value.Strings.BLANK;
+
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,16 +17,20 @@ import webflux.domain.value.Name;
 @Getter
 public class Todo implements Entity<Todo> {
 
-  private final String id;
+  private final Integer id;
   private final Name<Todo> name;
   private final Memo<Todo> memo;
 
   public static Todo of(Integer id, String name, String memo) {
-    return new Todo(id.toString(), Name.of(name), Memo.of(memo));
+    return new Todo(id, Name.of(name), Memo.of(memo));
+  }
+
+  public static Todo of(Integer id) {
+    return new Todo(id, Name.of(BLANK), Memo.of(BLANK));
   }
 
   @Override
-  public String id() {
+  public Integer id() {
     return this.id;
   }
 }
