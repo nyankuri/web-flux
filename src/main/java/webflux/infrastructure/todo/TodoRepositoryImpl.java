@@ -24,10 +24,19 @@ public class TodoRepositoryImpl implements TodoRepository {
   }
 
   @Override
-  public Mono<Todo> findById(Todo todo) {
+  public Mono<Todo> findById(Todo.Id todoId) {
     return
         this.todoMapper
-            .findById(todo.id())
+            .findById(todoId.value())
             .map(Todos::to);
+  }
+
+  @Override
+  public Mono<Todo.Id> save(Todo todo) {
+    return
+        this.todoMapper
+            .save(Todos.saveFor(todo))
+            .map(Todos::getId)
+            .map(Todo::of);
   }
 }

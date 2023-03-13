@@ -1,4 +1,4 @@
-package webflux.domain.value;
+package webflux.lib.strings;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

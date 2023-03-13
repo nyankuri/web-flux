@@ -1,7 +1,16 @@
 CREATE TABLE todos
 (
-   id INT NOT NULL,
-   name VARCHAR(40) NOT NULL,
-   memo VARCHAR(1024),
+   id SERIAL PRIMARY KEY,
+   title VARCHAR(64) NOT NULL,
+   description VARCHAR(1024) NOT NULL,
+   assignee VARCHAR(64) NOT NULL,
+   PRIMARY KEY(id)
+);
+
+CREATE TABLE memos
+(
+   id SERIAL PRIMARY KEY,
+   todo_id INT NOT NULL,
+   memo VARCHAR(1024) NOT NULL,
    PRIMARY KEY(id)
 );
